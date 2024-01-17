@@ -43,14 +43,14 @@ def find_closest_match(word, choices):
 #st.sidebar.image("UT-logo.PNG")
 st.sidebar.header('Automated categorical data cleaning using AI.')
 st.sidebar.write("""
-         ######  This app is made with python using Streamlit and OpenAI APIs to Automated the categorical data cleaning using AI. 
+         ######  This app is made with Python using Streamlit and OpenAI APIs to Automate categorical data cleaning using AI. If you are interested in checking the code, go to [My Github](https://github.com/lamisghoualmi/Automated-data-cleaning-using-AI)
          """)
 
 
 # Display the header
 st.markdown("""<hr style="height:2px; border:none; color:#66CD00; background-color:orange;" /> """, unsafe_allow_html=True)
 st.title('Automated Categorical Data Cleaning using AI.')
-st.text('Inaugural UT IT Symposium: Engage, Enlighten, Enjoy.')
+st.text('App developped for the Inaugural UT IT Symposium 2024.')
 st.markdown("""<hr style="height:2px; border:none; color:#66CD00; background-color:orange;" /> """, unsafe_allow_html=True)
 
 
