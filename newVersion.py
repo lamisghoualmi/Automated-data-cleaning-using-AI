@@ -1,4 +1,5 @@
-
+#cd 'C:\Users\lghoualm\OneDrive - University of Tennessee\Desktop\Automated-data-cleaning-using-AI'
+#
 
 import openai
 import numpy as np
@@ -40,10 +41,9 @@ def find_closest_match(word, choices):
 
 
 #______________________________________Streamlit app_________________________________________________
-#st.sidebar.image("UT-logo.PNG")
 st.sidebar.header('Automated categorical data cleaning using AI.')
 st.sidebar.write("""
-         ######  This app is made with Python using Streamlit and OpenAI APIs to Automate categorical data cleaning using AI. If you are interested in checking the code, go to [My Github](https://github.com/lamisghoualmi/Automated-data-cleaning-using-AI)
+         ######  This app is made with python using Streamlit and OpenAI APIs to Automated the categorical data cleaning using AI. If you are interested to check to code, go to [My Github](https://github.com/lamisghoualmi/Automated-data-cleaning-using-AI)
          """)
 
 
@@ -54,9 +54,9 @@ st.text('App developped for the Inaugural UT IT Symposium 2024.')
 st.markdown("""<hr style="height:2px; border:none; color:#66CD00; background-color:orange;" /> """, unsafe_allow_html=True)
 
 
-#___________________________________________PRESENT THE DATASET___________________________________________________________________________________________________
+#___________________________________________DATASETS___________________________________________________________________________________________________
 
-option = st.selectbox('Choose a dataset:', (' ', 'Load a dataset'))
+option = st.selectbox('Choose a dataset:', (' ', 'Load a dataset', 'Use example dataset (Fruits dataset)', 'Use example dataset (HR dataset)'))
 
 if option == 'Load a dataset':
     uploaded_file = st.file_uploader("Upload a dataset (CSV file)", type=['csv'], accept_multiple_files=False, key=None, help=None,
@@ -73,9 +73,11 @@ if option == 'Load a dataset':
             if FieldName in df.columns:
              unique_values = df[FieldName].unique()
              num_unique_values = df[FieldName].nunique()
-             st.write('Variable name:', FieldName)
-             st.write('Unique values', unique_values)
-             st.write('Number of unique values', num_unique_values)
+
+             st.markdown('**Variable name:** {}'.format(FieldName))
+             st.markdown('**Unique values:**')
+             st.write( unique_values)
+             st.markdown('**Number of unique values:** {}'.format(num_unique_values))
             else:
                 st.warning("Enter a valid field name from the DataFrame.")
 
@@ -88,7 +90,7 @@ if option == 'Load a dataset':
 
 
         #________________________________  Ai _________________________________
-        if st.button('Clean the categorical field using AI'):
+        if st.button('Clean field using AI'):
             if FieldName1 in df.columns:
         
               message= df[FieldName1].tolist()
@@ -110,7 +112,9 @@ if option == 'Load a dataset':
               #st.write('_______________CHATGPT result:',  dataf)
 
               dataf2 = pd.DataFrame({'Unique': dataf['Words'].drop_duplicates()})
-              st.write('CHATGPT result (Distinct unqiue result):',  dataf2)
+              st.markdown('**Unique values proposed by AI:**')
+              st.write( dataf2)
+              
 
          #    # Apply the function to update the 'Fruit' column
               df[FieldName1] = df[FieldName1].apply(lambda x: find_closest_match(x, dataf2['Unique']))
@@ -118,13 +122,156 @@ if option == 'Load a dataset':
               st.write(df)
               unique_values1 = df[FieldName1].unique()
               num_unique_values1 = df[FieldName1].nunique()
-              st.write('Variable name:', FieldName1)
-              st.write('Unique values', unique_values1)
-              st.write('Number of unique values', num_unique_values1)
+
+              
+              st.markdown('**Analyse the cleanned data based AI:**')
+              st.markdown('**Variable name:** {}'.format(FieldName1))
+              st.markdown('**Unique values:**')
+              st.write( unique_values1)
+              st.markdown('**Number of unique values:** {}'.format(num_unique_values1))
+            else:
+                st.warning("Enter a valid categorical field name from the DataFrame.")
+
+#___________________________________________FRUIT DATASET_________________________________________________________
+if option == 'Use example dataset (Fruits dataset)':
+        df = pd.read_csv('Fruits_Data.csv')
+        st.write(df)
+        st.markdown("""<hr style="height:2px; border:none; color:#66CD00; background-color:orange;" /> """, unsafe_allow_html=True)
+        st.write("""
+         ####  Analyze a categorical field. 
+         """)
+        FieldName = st.text_input('Enter a categorical field name to analyze:', '')
+        if st.button('Analyse field'):
+            if FieldName in df.columns:
+             unique_values = df[FieldName].unique()
+             num_unique_values = df[FieldName].nunique()
+
+             st.markdown('**Variable name:** {}'.format(FieldName))
+             st.markdown('**Unique values:**')
+             st.write( unique_values)
+             st.markdown('**Number of unique values:** {}'.format(num_unique_values))
+            else:
+                st.warning("Enter a valid field name from the DataFrame.")
+
+    
+        st.markdown("""<hr style="height:2px; border:none; color:#66CD00; background-color:orange;" /> """, unsafe_allow_html=True)
+        st.write("""
+         ####  Clean and analyze a categorical field using AI. 
+         """)
+        FieldName1 = st.text_input('Enter a categorical field name to clean using AI', key='unique_key')
+        #________________________________  Ai _________________________________
+        if st.button('Clean field using AI'):
+            if FieldName1 in df.columns:
+        
+              message= df[FieldName1].tolist()
+              # Convert the list to a string without square brackets
+              message = str(message)[1:-1]
+              Respo = ai_clean(message)
+
+             # Converting the string to a list
+              result_list = '[' + Respo + ']'
+              result_list =result_list.strip('[]')
+              result_list = result_list.replace(',', '')
+              #st.write('CHATGPT result:', result_list)
+
+              # Extracting words from the string
+              words = result_list.split()
+
+              # Creating a DataFrame with a single column
+              dataf = pd.DataFrame({'Words': words})
+              #st.write('_______________CHATGPT result:',  dataf)
+
+              dataf2 = pd.DataFrame({'Unique': dataf['Words'].drop_duplicates()})
+              st.markdown('**Unique values proposed by AI:**')
+              st.write( dataf2)
+              
+
+         #    # Apply the function to update the 'Fruit' column
+              df[FieldName1] = df[FieldName1].apply(lambda x: find_closest_match(x, dataf2['Unique']))
+              st.write('Cleanned data using Ai')
+              st.write(df)
+              unique_values1 = df[FieldName1].unique()
+              num_unique_values1 = df[FieldName1].nunique()
+
+              
+              st.markdown('**Analyse the cleanned data based AI:**')
+              st.markdown('**Variable name:** {}'.format(FieldName1))
+              st.markdown('**Unique values:**')
+              st.write( unique_values1)
+              st.markdown('**Number of unique values:** {}'.format(num_unique_values1))
             else:
                 st.warning("Enter a valid categorical field name from the DataFrame.")
         
+#___________________________________________HR DATASET_________________________________________________________
+if option == 'Use example dataset (HR dataset)':
+        df = pd.read_csv('HR_Data.csv')
+        st.write(df)
+        st.markdown("""<hr style="height:2px; border:none; color:#66CD00; background-color:orange;" /> """, unsafe_allow_html=True)
+        st.write("""
+         ####  Analyze a categorical field. 
+         """)
+        FieldName = st.text_input('Enter a categorical field name to analyze:', '')
+        if st.button('Analyse field'):
+            if FieldName in df.columns:
+             unique_values = df[FieldName].unique()
+             num_unique_values = df[FieldName].nunique()
 
+             st.markdown('**Variable name:** {}'.format(FieldName))
+             st.markdown('**Unique values:**')
+             st.write( unique_values)
+             st.markdown('**Number of unique values:** {}'.format(num_unique_values))
+            else:
+                st.warning("Enter a valid field name from the DataFrame.")
+
+    
+        st.markdown("""<hr style="height:2px; border:none; color:#66CD00; background-color:orange;" /> """, unsafe_allow_html=True)
+        st.write("""
+         ####  Clean and analyze a categorical field using AI. 
+         """)
+        FieldName1 = st.text_input('Enter a categorical field name to clean using AI', key='unique_key')
+        #________________________________  Ai _________________________________
+        if st.button('Clean field using AI'):
+            if FieldName1 in df.columns:
+        
+              message= df[FieldName1].tolist()
+              # Convert the list to a string without square brackets
+              message = str(message)[1:-1]
+              Respo = ai_clean(message)
+
+             # Converting the string to a list
+              result_list = '[' + Respo + ']'
+              result_list =result_list.strip('[]')
+              result_list = result_list.replace(',', '')
+              #st.write('CHATGPT result:', result_list)
+
+              # Extracting words from the string
+              words = result_list.split()
+
+              # Creating a DataFrame with a single column
+              dataf = pd.DataFrame({'Words': words})
+              #st.write('_______________CHATGPT result:',  dataf)
+
+              dataf2 = pd.DataFrame({'Unique': dataf['Words'].drop_duplicates()})
+              st.markdown('**Unique values proposed by AI:**')
+              st.write( dataf2)
+              
+
+         #    # Apply the function to update the 'Fruit' column
+              df[FieldName1] = df[FieldName1].apply(lambda x: find_closest_match(x, dataf2['Unique']))
+              st.write('Cleanned data using Ai')
+              st.write(df)
+              unique_values1 = df[FieldName1].unique()
+              num_unique_values1 = df[FieldName1].nunique()
+
+              
+              st.markdown('**Analyse the cleanned data based AI:**')
+              st.markdown('**Variable name:** {}'.format(FieldName1))
+              st.markdown('**Unique values:**')
+              st.write( unique_values1)
+              st.markdown('**Number of unique values:** {}'.format(num_unique_values1))
+            else:
+                st.warning("Enter a valid categorical field name from the DataFrame.")
+        
     
 
 
