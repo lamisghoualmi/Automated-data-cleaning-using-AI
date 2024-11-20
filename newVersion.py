@@ -43,7 +43,7 @@ def find_closest_match(word, choices):
 #______________________________________Streamlit app_________________________________________________
 st.sidebar.header('Automated categorical data cleaning using AI.')
 st.sidebar.write("""
-         ######  This app is made with python using Streamlit and OpenAI APIs to Automated the categorical data cleaning using AI. If you are interested to check to code, go to [My Github](https://github.com/lamisghoualmi/Automated-data-cleaning-using-AI)
+         ######  This app is made with Python using Streamlit and OpenAI APIs to automate the cleaning of categorical data using AI. If you are interested in checking my code, go to [My Github](https://github.com/lamisghoualmi/Automated-data-cleaning-using-AI)
          """)
 
 
