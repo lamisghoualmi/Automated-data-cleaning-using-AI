@@ -43,7 +43,7 @@ def find_closest_match(word, choices):
 #______________________________________Streamlit app_________________________________________________
 st.sidebar.header('Automated categorical data cleaning using AI.')
 st.sidebar.write("""
-         ######  The application leverages AI to clean raw data and improve consistency by identifying and correcting irregularities. After the initial AI-based data cleaning, the app uses the FuzzyWuzzy library's process module to match AI-proposed corrections against existing data entries. This fuzzy matching technique ensures that suggestions align closely with the intended values, even when there are minor differences like typos or variations. Finally, the app updates the data with refined, validated entries, making it more accurate and reliable for further analysis or usage. 
+         ######  This app developed in Python leverages AI (OpenAI API, ChatGPT) to clean raw data and improve consistency by identifying and correcting irregularities. After the initial AI-based data cleaning, the app uses the FuzzyWuzzy library's process module to match AI-proposed corrections against existing data entries. This fuzzy matching technique ensures that suggestions align closely with the intended values, even when there are minor differences like typos or variations. Finally, the app updates the data with refined, validated entries, making it more accurate and reliable for further analysis or usage. 
          """)
 
 st.sidebar.write("""
@@ -287,9 +287,7 @@ if option == 'Use example dataset (HR dataset)':
 
 
 
-st.sidebar.write("""
-         ######  Made by Lamis Ghoualmi  
-         """)
+
 
 
 
