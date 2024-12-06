@@ -1,4 +1,4 @@
-#cd 'C:\Users\lghoualm\OneDrive - University of Tennessee\Desktop\Automated-data-cleaning-using-AI'
+
 #
 
 import openai
