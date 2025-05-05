@@ -61,7 +61,7 @@ st.sidebar.write("""
 # Display the header
 st.markdown("""<hr style="height:2px; border:none; color:#66CD00; background-color:orange;" /> """, unsafe_allow_html=True)
 st.title('Automated Categorical Data Cleaning using AI.')
-st.text('App developped for the Inaugural UT IT Symposium 2024.')
+
 st.markdown("""<hr style="height:2px; border:none; color:#66CD00; background-color:orange;" /> """, unsafe_allow_html=True)
 
 
