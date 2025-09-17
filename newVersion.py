@@ -19,7 +19,7 @@ def ai_clean(message):
     messages = [
     {
         "role": "system",
-        "content": "Correct spelling, remove punctuation, convert to lowercase, and map messy words to standard categories."
+        "content": "Fix spelling, remove punctuation, lowercase text, and standardize words to canonical values."
 
     }
 ]
@@ -295,6 +295,7 @@ if option == 'Use example dataset (HR dataset)':
 
 #____________________________________________________________________________________________________________________________________
 #____________________________________________________________________________________________________________________________________
+
 
 
 
